@@ -1,0 +1,238 @@
+/*.dropdn  
+{  
+margin-left: 250px;  
+margin-top: 20px;  
+margin-right: 250px;  
+padding: 30px;  
+}  
+.slct  
+{  
+margin-top: 20px;  
+} 
+
+.height-donut-cardbody{
+    padding: 1.5rem 5.5rem !important;
+}
+.marginTop-for-page{
+    margin-top: 33rem;
+}*/
+
+.marginBottom-for-timeseries-chart{
+  margin-bottom:2rem !important;
+}
+
+/*h2, .h2 {
+  font-size: 1.5rem;
+}
+h3{
+  font-size: 1.25rem;
+}
+h5{
+   font-size: 1rem;
+}
+h4{
+  font-size:1.125rem;
+}
+.icon-md {
+  font-size: 1.875rem;
+}
+h2, .h2 {
+  font-size: 1.5rem;
+}*/
+
+
+.fixed-content{
+    
+    position: sticky;
+    top: 130px;
+    z-index:1;
+}
+.fixed-content1{
+  position: fixed;
+    // top: 65px;
+    // left: 50px;
+    // width: 100px;
+    z-index:1;
+}
+
+.dashboardDonutAlign{
+  justify-content: center;
+  margin-left: 2rem;
+  text-align: top;
+}
+.dashboard-top-align{
+  margin-top:5rem;
+  margin-left: -8px;
+}
+
+.dropdown-style
+{
+  height: 33px;
+  float:right !important;
+  margin-right: 0rem !important ;
+  margin-top: 0px !important;
+}
+.margin-end{
+  margin-right: 11px;
+}
+.mt-4 {
+  margin-top: -0.5rem !important;
+}
+// .col-xl-3
+// {
+//     width: 25% !important;
+// }
+.preview-list {
+  .preview-item {
+    display: flex;
+    flex-direction:row;
+     align-items:flex-start;
+    padding: .75rem 1.5rem;
+    font-size: .875rem;
+    &:last-child {
+      border-bottom: 0;
+    }
+    &:hover {
+      background: white;
+    }
+    .form-check {
+      margin-top: 8px;
+      margin-right: 1rem;
+    }
+    .preview-thumbnail {
+      color: color(white);
+      position: relative;
+      img,
+      .preview-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 100%;
+      }
+      .preview-icon {
+        padding: 6px;
+        text-align: center;
+         display:flex;
+        align-items:center;
+        justify-content:center;
+        i {
+          font-size: 1.125rem;
+          margin: 0;
+         
+        }
+      }
+      .badge {
+        border: 2px solid color(white);
+        border-radius: 100%;
+        bottom: 5px;
+        display: block;
+        height: 14px;
+        left: -5px;
+        padding: 0;
+        position: absolute;
+        width: 14px;
+        &.badge-online {
+        //  @extend .badge-success;
+        }
+        &.badge-offline {
+        //  @extend .badge-info;
+        }
+        &.badge-busy {
+       //   @extend .badge-warning;
+        }
+      }
+    }
+    .preview-item-content {
+      line-height: 1;
+      padding-left: 15px;
+      &:first-child {
+        padding-left: 0;
+      }
+      p {
+        margin-bottom: 10px;
+        .content-category {
+          font-family: 'source-sans-pro-semibold', sans-serif;
+          padding-right: 15px;
+          border-right: 1px solid white;
+         // @extend .text-muted;
+        }
+      }
+      .rtl & {
+        padding-left: 0;
+        padding-right: 1rem;
+        margin-right: 0;
+        margin-left: auto;
+      }
+    }
+    .preview-actions {
+   display:flex;
+     flex-direction:row;
+      i {
+        width: 29px;
+        color: color(gray-lightest);
+        height: 29px;
+        border: 2px solid color(gray-lightest);
+        border-radius: 100%;
+        padding: 3px 6px;
+        display: inline-block;
+        &:first-child {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+  &.comment-preview {
+    .preview-item {
+      padding: .87rem 0;
+      &:first-child {
+        padding-top: 0;
+      }
+      p {
+        line-height: 27px;
+      }
+    }
+  }
+  &.bordered {
+    .preview-item {
+      border-bottom: 1px solid white;
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+  }
+}
+.dropdown-menu {
+  position: absolute;
+  z-index: 1000;
+  display: none;
+  min-width: 10rem;
+  padding: 0rem 0;
+  margin: 0;
+  font-size: 1rem;
+  color: #212529;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+}
+.preview-list .preview-item .preview-thumbnail .preview-icon i {
+  font-size: 1.35rem;
+  margin-left: 0rem !important;
+}
+.header-align{
+
+  margin-left: -8px;
+  margin-top: 5px;
+
+}
+.modeClass{
+position: absolute;
+  width: 100%;
+  height: 100%;
+  margin-top: 57%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
