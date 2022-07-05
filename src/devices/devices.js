@@ -4,7 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+// import Select from '@mui/material/Select';
 import { Dropdown as DropdownReact } from 'react-bootstrap';
 import { Link as ReactLink} from "react-router-dom";
 import Link from '@mui/material/Link';
@@ -16,7 +16,7 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import { Menu, Dropdown, Button, message, Space } from 'antd';
 import { DownOutlined, UserOutlined,SyncOutlined } from '@ant-design/icons';
 import DeviceMeta from '../shared-components/Util/device-meta/deviceMeta';
-import { TreeSelect } from 'antd';
+import { TreeSelect ,Select} from 'antd';
 
 var chickletRoutingId = null;
 
@@ -27,7 +27,6 @@ let tempLocationIdsList = [];
 const { SHOW_PARENT } = TreeSelect;
 var treeData = [];
 var resultTreeHierarchyList = [];   
-
 
 export class Devices extends React.Component {
   constructor(props){
@@ -496,23 +495,28 @@ getDeviceTelemetryByModeFilter  = (mode) => {
     }
   }
 
-  handleDeviceFilterChange = (e) => {   
-        console.log('handleDeviceFilterChange called:: ');
-      this.setState({deviceId: e.target.value});  
-       if(e.target.value === ""){
-          this.setState({value:[]});
-         this.setState({refreshState:true});
-         this.getTelemetryData();
+  // handleDeviceFilterChange = (e) => {   
+  //       console.log('handleDeviceFilterChange called:: ');
+  //     this.setState({deviceId: e.target.value});  
+  //      if(e.target.value === ""){
+  //         this.setState({value:[]});
+  //        this.setState({refreshState:true});
+  //        this.getTelemetryData();
         
-         //treeData=[];
-        // this.getLocationData(); 
-         this.setState({locationDevicesId: 'All Locations'});           
-        console.log('e.target.value',e.target.value)        
-       }else{
-         this.setState({refreshState:true});
-         this.getDeviceTelemetryByFilter(e.target.value);
-       }          
+  //        //treeData=[];
+  //       // this.getLocationData(); 
+  //        this.setState({locationDevicesId: 'All Locations'});           
+  //       console.log('e.target.value',e.target.value)        
+  //      }else{
+  //        this.setState({refreshState:true});
+  //        this.getDeviceTelemetryByFilter(e.target.value);
+  //      }          
+  // }
+
+  handleDeviceFilterChange = (e) => {   
+          console.log(e);
   }
+
 
   handleModeFilterChange = (e) => {   
     console.log('handleModeFilterChange called:: ',e.target.value);
@@ -793,28 +797,43 @@ sendCommand = (mode,selectedDeviceId,udi) =>{
               
                   <li className="list-group-item border-0">
                   
-                    <Box sx={{ minWidth: 220 }}>
-                      <FormControl size="small" fullWidth>
-                        <InputLabel id="device-select-label">Devices</InputLabel>
+                    {/* <Box sx={{ minWidth: 220  }} >
+                      <FormControl size="small" fullWidth  >
+                        <InputLabel id="device-select-label" >Devices</InputLabel>
+                        
+                       */}
                         <Select
-                          labelId="device-select-label"
-                          id="device-select"
-                          value={this.state.deviceId}
-                          label="Devices"
-                          onChange={this.handleDeviceFilterChange} >
-                          <MenuItem value="">
-                            <em>All Devices</em>
-                          </MenuItem>
-                          {this.state.deviceData.map((make, index) => (
+                        style={{ width: 240 }}
+                        // size="large"
+                        placeholder=" Select Devices"
+                        labelId="device-select-label"
+                         id="device-select"
+                        //  defaultValue={['All Devices']}
+                         label="Devices" 
+                         mode="multiple" 
+                         showArrow
+                         onChange={this. handleDeviceFilterChange}
+                        
+                         >
+                        
+                         <MenuItem value="">
+                           <em>All Devices</em>
+                         </MenuItem>
+                             {this.state.deviceData.map((make, index) => (
                               <MenuItem key={make.deviceId} value={make.deviceId}>{make.nickname}</MenuItem>
-                          ))}
-                        </Select>
+                              ))}
+
+                            
+                       </Select>
+{/*                       
                       </FormControl>
-                    </Box>
+                    </Box> */}
+
+                    
                 </li>
                 <li className="list-group-item border-0">
                  
-                    <Box sx={{ minWidth: 220 }}>
+                <Box sx={{ minWidth: 220 }}>
                       <FormControl size="small" fullWidth>
                         <InputLabel id="device-mode-label">Modes</InputLabel>
                         <Select
