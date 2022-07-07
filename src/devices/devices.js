@@ -4,7 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-// import Select from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import { Dropdown as DropdownReact } from 'react-bootstrap';
 import { Link as ReactLink} from "react-router-dom";
 import Link from '@mui/material/Link';
@@ -16,7 +16,10 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import { Menu, Dropdown, Button, message, Space } from 'antd';
 import { DownOutlined, UserOutlined,SyncOutlined } from '@ant-design/icons';
 import DeviceMeta from '../shared-components/Util/device-meta/deviceMeta';
-import { TreeSelect ,Select} from 'antd';
+import { TreeSelect } from 'antd';
+import ApexChart from "./ApexChart";
+
+import Chart from 'react-apexcharts';
 
 var chickletRoutingId = null;
 
@@ -27,6 +30,7 @@ let tempLocationIdsList = [];
 const { SHOW_PARENT } = TreeSelect;
 var treeData = [];
 var resultTreeHierarchyList = [];   
+
 
 export class Devices extends React.Component {
   constructor(props){
@@ -243,7 +247,7 @@ setNewInterval = (interval,intervalTitle) =>{
       this.setState({location:"None"});
       this.setState({deviceMetaData:[]})
     }    
-    var listOfModes = ["SENSE_ONLY","OPERATIONAL","STANDBY",];
+    var listOfModes = ["SENSE_ONLY","OPERATIONAL","STANDBY","OFF"];
     var modeIndex = listOfModes.indexOf(this.state.mode);
     listOfModes.splice(modeIndex,1);
     this.setState({modesList: listOfModes});
@@ -495,28 +499,23 @@ getDeviceTelemetryByModeFilter  = (mode) => {
     }
   }
 
-  // handleDeviceFilterChange = (e) => {   
-  //       console.log('handleDeviceFilterChange called:: ');
-  //     this.setState({deviceId: e.target.value});  
-  //      if(e.target.value === ""){
-  //         this.setState({value:[]});
-  //        this.setState({refreshState:true});
-  //        this.getTelemetryData();
-        
-  //        //treeData=[];
-  //       // this.getLocationData(); 
-  //        this.setState({locationDevicesId: 'All Locations'});           
-  //       console.log('e.target.value',e.target.value)        
-  //      }else{
-  //        this.setState({refreshState:true});
-  //        this.getDeviceTelemetryByFilter(e.target.value);
-  //      }          
-  // }
-
   handleDeviceFilterChange = (e) => {   
-          console.log(e);
+        console.log('handleDeviceFilterChange called:: ');
+      this.setState({deviceId: e.target.value});  
+       if(e.target.value === ""){
+          this.setState({value:[]});
+         this.setState({refreshState:true});
+         this.getTelemetryData();
+        
+         //treeData=[];
+        // this.getLocationData(); 
+         this.setState({locationDevicesId: 'All Locations'});           
+        console.log('e.target.value',e.target.value)        
+       }else{
+         this.setState({refreshState:true});
+         this.getDeviceTelemetryByFilter(e.target.value);
+       }          
   }
-
 
   handleModeFilterChange = (e) => {   
     console.log('handleModeFilterChange called:: ',e.target.value);
@@ -575,7 +574,7 @@ getDeviceTelemetryByModeFilter  = (mode) => {
         if(res[i].mode === 'SENSE_ONLY'){
           res[i].modeColor ='#0096FF'
           res[i].icon ="mdi mdi-18px mdi-access-point"
-          var listOfModes = ["SENSE_ONLY","OPERATIONAL","STANDBY",];
+          var listOfModes = ["SENSE_ONLY","OPERATIONAL","STANDBY","OFF"];
           var modeIndex = listOfModes.indexOf(res[i].mode);
           listOfModes.splice(modeIndex,1);
           res[i].listOfModes = listOfModes;
@@ -584,7 +583,7 @@ getDeviceTelemetryByModeFilter  = (mode) => {
         else if(res[i].mode === 'STANDBY'){
           res[i].modeColor ='#FF8C00'
           res[i].icon ="mdi mdi-18px mdi-power-standby"
-          var listOfModes = ["SENSE_ONLY","OPERATIONAL","STANDBY",];
+          var listOfModes = ["SENSE_ONLY","OPERATIONAL","STANDBY","OFF"];
           var modeIndex = listOfModes.indexOf(res[i].mode);
           listOfModes.splice(modeIndex,1);
           res[i].listOfModes = listOfModes;
@@ -592,7 +591,15 @@ getDeviceTelemetryByModeFilter  = (mode) => {
         else if(res[i].mode === 'OPERATIONAL'){
           res[i].modeColor ='#800080'   
           res[i].icon ="mdi mdi-18px mdi-cog-sync-outline"   
-          var listOfModes = ["SENSE_ONLY","OPERATIONAL","STANDBY",];
+          var listOfModes = ["SENSE_ONLY","OPERATIONAL","STANDBY","OFF"];
+          var modeIndex = listOfModes.indexOf(res[i].mode);
+          listOfModes.splice(modeIndex,1);
+          res[i].listOfModes = listOfModes;
+        }
+        else if(res[i].mode === 'OFF'){
+          res[i].modeColor ='#FF0000'   
+          res[i].icon ="mdi mdi-18px mdi-power-plug-off"   
+          var listOfModes = ["SENSE_ONLY","OPERATIONAL","STANDBY","OFF"];
           var modeIndex = listOfModes.indexOf(res[i].mode);
           listOfModes.splice(modeIndex,1);
           res[i].listOfModes = listOfModes;
@@ -601,7 +608,7 @@ getDeviceTelemetryByModeFilter  = (mode) => {
           res[i].mode ='None'
           res[i].modeColor ='#000000' 
           res[i].icon ="mdi mdi-18px mdi-radiobox-marked"
-          var listOfModes = ["SENSE_ONLY","OPERATIONAL","STANDBY",];
+          var listOfModes = ["SENSE_ONLY","OPERATIONAL","STANDBY","OFF"];
           res[i].listOfModes = listOfModes;
                                     
         }
@@ -623,7 +630,7 @@ getDeviceTelemetryByModeFilter  = (mode) => {
  if(res[i].mode === 'SENSE_ONLY'){
           res[i].modeColor ='#0096FF'
           res[i].icon ="mdi mdi-18px mdi-access-point"
-          var listOfModes = ["SENSE_ONLY","OPERATIONAL","STANDBY",];
+          var listOfModes = ["SENSE_ONLY","OPERATIONAL","STANDBY","OFF"];
           var modeIndex = listOfModes.indexOf(res[i].mode);
           listOfModes.splice(modeIndex,1);
           res[i].listOfModes = listOfModes;
@@ -632,7 +639,7 @@ getDeviceTelemetryByModeFilter  = (mode) => {
         else if(res[i].mode === 'STANDBY'){
           res[i].modeColor ='#FF8C00'
           res[i].icon ="mdi mdi-18px mdi-power-standby"
-          var listOfModes = ["SENSE_ONLY","OPERATIONAL","STANDBY",];
+          var listOfModes = ["SENSE_ONLY","OPERATIONAL","STANDBY","OFF"];
           var modeIndex = listOfModes.indexOf(res[i].mode);
           listOfModes.splice(modeIndex,1);
           res[i].listOfModes = listOfModes;
@@ -640,7 +647,15 @@ getDeviceTelemetryByModeFilter  = (mode) => {
         else if(res[i].mode === 'OPERATIONAL'){
           res[i].modeColor ='#800080'   
           res[i].icon ="mdi mdi-18px mdi-office-building-cog-outline"   
-          var listOfModes = ["SENSE_ONLY","OPERATIONAL","STANDBY",];
+          var listOfModes = ["SENSE_ONLY","OPERATIONAL","STANDBY","OFF"];
+          var modeIndex = listOfModes.indexOf(res[i].mode);
+          listOfModes.splice(modeIndex,1);
+          res[i].listOfModes = listOfModes;
+        }
+        else if(res[i].mode === 'OFF'){
+          res[i].modeColor ='#800080'   
+          res[i].icon ="mdi mdi-18px mdi-power-plug-off"   
+          var listOfModes = ["SENSE_ONLY","OPERATIONAL","STANDBY","OFF"];
           var modeIndex = listOfModes.indexOf(res[i].mode);
           listOfModes.splice(modeIndex,1);
           res[i].listOfModes = listOfModes;
@@ -797,43 +812,28 @@ sendCommand = (mode,selectedDeviceId,udi) =>{
               
                   <li className="list-group-item border-0">
                   
-                    {/* <Box sx={{ minWidth: 220  }} >
-                      <FormControl size="small" fullWidth  >
-                        <InputLabel id="device-select-label" >Devices</InputLabel>
-                        
-                       */}
+                    <Box sx={{ minWidth: 220 }}>
+                      <FormControl size="small" fullWidth>
+                        <InputLabel id="device-select-label">Devices</InputLabel>
                         <Select
-                        style={{ width: 240 }}
-                        // size="large"
-                        placeholder=" Select Devices"
-                        labelId="device-select-label"
-                         id="device-select"
-                        //  defaultValue={['All Devices']}
-                         label="Devices" 
-                         mode="multiple" 
-                         showArrow
-                         onChange={this. handleDeviceFilterChange}
-                        
-                         >
-                        
-                         <MenuItem value="">
-                           <em>All Devices</em>
-                         </MenuItem>
-                             {this.state.deviceData.map((make, index) => (
+                          labelId="device-select-label"
+                          id="device-select"
+                          value={this.state.deviceId}
+                          label="Devices"
+                          onChange={this.handleDeviceFilterChange} >
+                          <MenuItem value="">
+                            <em>All Devices</em>
+                          </MenuItem>
+                          {this.state.deviceData.map((make, index) => (
                               <MenuItem key={make.deviceId} value={make.deviceId}>{make.nickname}</MenuItem>
-                              ))}
-
-                            
-                       </Select>
-{/*                       
+                          ))}
+                        </Select>
                       </FormControl>
-                    </Box> */}
-
-                    
+                    </Box>
                 </li>
                 <li className="list-group-item border-0">
                  
-                <Box sx={{ minWidth: 220 }}>
+                    <Box sx={{ minWidth: 220 }}>
                       <FormControl size="small" fullWidth>
                         <InputLabel id="device-mode-label">Modes</InputLabel>
                         <Select
@@ -862,7 +862,111 @@ sendCommand = (mode,selectedDeviceId,udi) =>{
                 </div>
                 
               
-            
+           <div className="row mb-2 ps-3">
+            <div className="card widget-flat">
+              <div className="card-body ">
+                <div className="col-md-12 ">
+
+                      <ApexChart/>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div className="row mb-2 ps-3">
+            <div className="card widget-flat">
+              <div className="card-body ">
+                <div className="col-md-12 ">
+
+
+                  <React.Fragment>
+
+                    
+                    <Chart
+                      type="bar"
+                      width={1349}
+                      height={200}
+                      series={[
+                        {
+                          name: "STANDBY",
+                          data: [465],
+                         
+                        },
+                        {
+                          name: "OPERATIONAL",
+                          data: [276],
+                          // color: '#000000'
+                        },
+                        {
+                          name: "SENSE ONLY",
+                          data: [229],
+                          // color: '#000000'
+                        }
+                      
+
+                      ]}
+
+                      options={{
+                        title: {
+                          text: "Details about the modes"
+                        },
+                        chart: {
+                          stacked: true,
+                        },
+                        plotOptions: {
+                          bar: {
+                            horizontal: true,
+                            columnWidth: '100%'
+                          }
+                        },
+                        stroke: {
+                          width: 1,
+                        },
+                        xaxis: {
+                          // categories: ['jan','feb','mar','apr','may','jun','jul','aug'],
+                          title: {
+                            text: "Total Modes.."
+                          },
+                          categories: ['canary']
+                        },
+                        yaxis: {
+                          // categories: ['jan','feb','mar','apr','may','jun','jul','aug'],
+                          title: {
+                            text: "TOTAL DEVICES"
+                          },
+                        
+                        },
+                        legend: {
+                          position: 'bottom'
+                        },
+                        dataLabels: {
+                          enabled: true,
+                        },
+                        grid: {
+                          show: true,
+                          xaxis: {
+                            lines: {
+                              show: false
+                            }
+                          },
+                          yaxis: {
+                            lines: {
+                              show: false
+                            }
+                          }
+
+                        }
+
+                      }}
+
+                    />
+                  </React.Fragment>
+                </div>
+              </div>
+            </div>
+          </div>         
+
               <div className="row mb-2 ps-3">
               <div className="card widget-flat">
           <div className="card-body ">  
@@ -893,6 +997,7 @@ sendCommand = (mode,selectedDeviceId,udi) =>{
                                       <DropdownReact.Menu>
                                           <DropdownReact.Item onClick={() => this.sendCommand(item.listOfModes[0],item.id,item.udi)}><i className="mdi mdi-pencil-outline mr-2"></i> Go {item.listOfModes[0]}</DropdownReact.Item>
                                           <DropdownReact.Item onClick={() => this.sendCommand(item.listOfModes[1],item.id,item.udi)}><i className="mdi mdi-pencil-outline mr-2"></i> Go {item.listOfModes[1]}</DropdownReact.Item>
+                                          <DropdownReact.Item onClick={() => this.sendCommand(item.listOfModes[2],item.id,item.udi)}><i className="mdi mdi-pencil-outline mr-2"></i> Go {item.listOfModes[2]}</DropdownReact.Item>
                                           <DropdownReact.Item onClick={() =>this.deviceMetaModalOpen(item.id)}><i className="mdi mdi-eye-outline mr-2"></i> Device Profile </DropdownReact.Item>
                                            {/* <DropdownReact.Item><i className="mdi mdi-eye-outline mr-2"></i> Show Alerts </DropdownReact.Item>
                                           <DropdownReact.Item><i className="mdi mdi-eye-outline mr-2"></i> OTA Update </DropdownReact.Item> */}
