@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactApexChart from "react-apexcharts";
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom';
 
 
 class ApexChart extends React.Component {
@@ -116,10 +116,5 @@ class ApexChart extends React.Component {
       );
     }
   }
-
-  // const domContainer = document.querySelector('#app');
-  // ReactDOM.render(React.createElement(ApexChart), domContainer);
-
-
 
   export default ApexChart;

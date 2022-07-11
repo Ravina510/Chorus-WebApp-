@@ -18,7 +18,7 @@ import { DownOutlined, UserOutlined,SyncOutlined } from '@ant-design/icons';
 import DeviceMeta from '../shared-components/Util/device-meta/deviceMeta';
 import { TreeSelect } from 'antd';
 import ApexChart from "./ApexChart";
-
+import MultipleChart from './MultipleChart';
 import Chart from 'react-apexcharts';
 
 var chickletRoutingId = null;
@@ -868,6 +868,17 @@ sendCommand = (mode,selectedDeviceId,udi) =>{
                 <div className="col-md-12 ">
 
                       <ApexChart/>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="row mb-2 ps-3">
+            <div className="card widget-flat">
+              <div className="card-body ">
+                <div className="col-md-12 ">
+
+                      <MultipleChart/>
                 </div>
               </div>
             </div>
